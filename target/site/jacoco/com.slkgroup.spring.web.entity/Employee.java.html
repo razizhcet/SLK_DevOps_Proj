@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Employee.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring4Hiberante4Integration</a> &gt; <a href="index.source.html" class="el_package">com.slkgroup.spring.web.entity</a> &gt; <span class="el_source">Employee.java</span></div><h1>Employee.java</h1><pre class="source lang-java linenums">package com.slkgroup.spring.web.entity;
+
+import javax.persistence.Column;
+
+/**
+ * @author Pavani Venkata Bheemaraju &amp; Amalasai Chinta
+ * @version 1.0
+ */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import java.io.Serializable;
+
+/**
+ * @author Imamsab Hulagur &amp; Pawanchandra R Dhawaskar
+ * @version 1.0
+ */
+
+@Entity
+@Table(name = &quot;Employees&quot;)
+public class Employee implements Serializable {
+
+	private static final long serialVersionUID = -7988799579036225137L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+
+	@Column
+	private String name;
+
+	@Column
+	private int age;
+
+	@Column
+	private float salary;
+
+<span class="fc" id="L41">	public Employee() {</span>
+<span class="fc" id="L42">	}</span>
+
+	public long getId() {
+<span class="fc" id="L45">		return id;</span>
+	}
+
+	public void setId(long id) {
+<span class="fc" id="L49">		this.id = id;</span>
+<span class="fc" id="L50">	}</span>
+
+	public String getName() {
+<span class="fc" id="L53">		return name;</span>
+	}
+
+	public void setName(String name) {
+<span class="fc" id="L57">		this.name = name;</span>
+<span class="fc" id="L58">	}</span>
+
+	public int getAge() {
+<span class="nc" id="L61">		return age;</span>
+	}
+
+	public void setAge(int age) {
+<span class="fc" id="L65">		this.age = age;</span>
+<span class="fc" id="L66">	}</span>
+
+	public float getSalary() {
+<span class="nc" id="L69">		return salary;</span>
+	}
+
+	public void setSalary(float salary) {
+<span class="fc" id="L73">		this.salary = salary;</span>
+<span class="fc" id="L74">	}</span>
+
+	@Override
+	public String toString() {
+<span class="fc" id="L78">		return &quot;Employee{&quot; + &quot;id=&quot; + id + &quot;, name='&quot; + name + '\'' + &quot;, age=&quot; + age + &quot;, salary=&quot; + salary + '}';</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
