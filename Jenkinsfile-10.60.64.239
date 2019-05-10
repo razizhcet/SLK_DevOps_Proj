@@ -111,7 +111,6 @@ pipeline {
         }
         failure {
             echo 'JENKINS PIPELINE FAILED'
-            archive "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
         }
     }
