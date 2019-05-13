@@ -29,7 +29,10 @@ public class EmployeeDAOImplTest {
 
 	Employee employee = new Employee();
 
-	
+	@Test
+	public void testingDAOObject() {
+		System.out.println(employeeDAO.hashCode());
+	}
 
 	@Before
 	public void setUpBeforeEachTest() {
@@ -53,7 +56,7 @@ public class EmployeeDAOImplTest {
 
 	@Test
 	public void testUpdateEmployee() {
-		employee.setName("babi");
+		employee.setName("baby");
 		employeeDAO.updateEmployee(employee);
 		Employee found = employeeDAO.getEmployee(employee.getId());
 		assertEquals("baby", found.getName());
