@@ -56,7 +56,7 @@ public class EmployeeDAOImplTest {
 
 	@Test
 	public void testUpdateEmployee() {
-		employee.setName("baby");
+		employee.setName("babi");
 		employeeDAO.updateEmployee(employee);
 		Employee found = employeeDAO.getEmployee(employee.getId());
 		assertEquals("baby", found.getName());
