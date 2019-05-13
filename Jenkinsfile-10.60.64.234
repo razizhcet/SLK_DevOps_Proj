@@ -92,12 +92,13 @@ pipeline {
                         bat label: 'Junit Testing process', script: "\"${mvnHome}\"\\bin\\mvn test -B"
 				      
                         }
-                    } catch(err) {
+                    } catch(Exception err) {
                         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-                          	
                           	if (currentBuild.result == 'UNSTABLE')
                             	currentBuild.result = 'FAILURE'
-                          		throw err
+                                echo "ERROR:  ${err}"
+                                echo "RESULT: ${currentBuild.result}"
+                          	throw err
                         }
                 echo "Test Ends"
                 }
