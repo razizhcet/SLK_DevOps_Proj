@@ -82,7 +82,7 @@ pipeline {
                 echo 'Test Begins'
                 try {
                     // Any maven phase that that triggers the test phase can be used here.
-
+                    mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
                         if (isUnix()) {
                             echo "Test Process in Unix"
                             sh "${mvnHome}/bin/mvn test -B"
