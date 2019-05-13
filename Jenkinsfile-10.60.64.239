@@ -80,8 +80,27 @@ pipeline {
             steps {
                 script{
                 echo 'Test Begins'
-                bat label: '', script: 'mvn test'
-                echo 'Test Ends.'
+                try {
+                    // Any maven phase that that triggers the test phase can be used here.
+
+	                if (isUnix()) {
+                        echo "Test Process in Unix"
+ 					    sh "${mvnHome}/bin/mvn test -B"
+                        } 
+                    else {
+                        echo 'Test Process in Windows'
+                        bat label: 'Junit Testing process', script: "\"${mvnHome}\"\\bin\\mvn test -B"
+				      
+                        }
+                    } catch(Exception err) {
+                        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+                          	if (currentBuild.result == 'UNSTABLE')
+                            	currentBuild.result = 'FAILURE'
+                                echo "ERROR:  ${err}"
+                                echo "RESULT: ${currentBuild.result}"
+                          	throw err
+                        }
+                echo "Test Ends"
                 }
             }
         }
