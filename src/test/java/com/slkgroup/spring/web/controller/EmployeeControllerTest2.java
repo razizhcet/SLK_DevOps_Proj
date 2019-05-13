@@ -16,7 +16,7 @@ public class EmployeeControllerTest2 {
 
 	@Test
 	public void test2() {
-		assertEquals(12, 12);
+		assertEquals(12, 13);
 	}
 
 	@Test
