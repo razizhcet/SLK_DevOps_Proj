@@ -4,7 +4,7 @@ pipeline {
   stage ('Build Process') {
         
      steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/final']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd5bc041c-753b-4f55-8a88-ef82c6c868c3', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '327fa637-c43a-489a-b8b2-09a376261557', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])
             bat label: '', script: 'mvn clean compile'
             }
     }
