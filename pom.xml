@@ -8,7 +8,6 @@
 	<packaging>war</packaging>
 	<name>Spring4Hiberante4Integration</name>
 	
-	
 	<!--comment for checking CI feature of git-->
 
 	<!-- Specifying the Versions of Spring, Hiberante, MySQL etc -->
