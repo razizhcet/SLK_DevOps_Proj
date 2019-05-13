@@ -29,10 +29,7 @@ public class EmployeeDAOImplTest {
 
 	Employee employee = new Employee();
 
-	@Test
-	public void testingDAOObject() {
-		System.out.println(employeeDAO.hashCode());
-	}
+	
 
 	@Before
 	public void setUpBeforeEachTest() {
