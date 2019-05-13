@@ -126,11 +126,8 @@ pipeline {
         aborted {
             echo 'JENKINS PIPELINE ABORTED'
         }
+        
         failure {
-            echo 'JENKINS PIPELINE FAILED'
-            archive "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            failure {
             echo 'JENKINS PIPELINE FAILED'
             archive "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
@@ -138,6 +135,6 @@ pipeline {
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
-        }
+        
     }
 }
