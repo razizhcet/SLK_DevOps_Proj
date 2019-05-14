@@ -105,7 +105,7 @@ pipeline {
             steps {
                 script{
                     echo 'Deploy/Deliver Begins'
-                    bat label: '', script: 'copy D:\\Tools\\Jenkins\\JenkinsHome\\workspace\\scm_pipeline1\\target\\*.war D:\\apache-tomcat-8.0\\webapps'
+                    bat label: '', script: 'copy D:\\Tools\\Jenkins\\JenkinsHome\\workspace\\${env.JOB_NAME}\\target\\*.war D:\\apache-tomcat-8.0\\webapps'
                     echo 'DeploymentDeploy/Deliver Ends'
                 }
             }
