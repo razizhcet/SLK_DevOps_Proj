@@ -1,0 +1,110 @@
+def mvnHome
+
+pipeline {
+    
+    agent {
+        label 'master'
+    }
+    options { 
+      skipDefaultCheckout() 
+    }
+    stages {
+        stage('Code'){
+            steps {
+                script {
+                        echo "Code Checkout Begins"
+                        mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
+                            if (isUnix()) {
+                          	} else {
+                          	}
+                        echo "Code Checkout Ends"
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps{
+                script{
+                    echo "SonarQube Analysis Begins"
+                                mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
+                                withSonarQubeEnv('SonarQube') {
+                                    if (isUnix()) {
+                                        echo 'SonarQube Analysis in Unix'
+                                        } 
+                                    else {
+                                       echo 'SonarQube Analysis in Windows'
+                                    }
+                                }
+                    echo "SonarQube Analysis Ends"
+                }
+            }
+        }
+        
+        stage("SonarQube Quality Gate Status Check"){
+            steps{
+                script{
+                    echo "SonarQube Quality Gate Status Check Begins"
+                    echo "SonarQube Quality Gate Status Check Ends"
+                }
+            }
+        }
+
+	    stage ('Test') {
+            steps {
+                script{
+                    echo 'Test Begins'
+                    try {
+                        // Any maven phase that that triggers the test phase can be used here.
+                        mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
+                            if (isUnix()) {
+                                echo "Test Process in Unix"
+                            } 
+                            else {
+                                echo 'Test Process in Windows'
+                            }
+                    } catch(Exception err) {
+                            step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+                              	if (currentBuild.result == 'FAILURE')
+                                    echo "ERROR:  ${err}"
+                                    echo "RESULT: ${currentBuild.result}"
+                              	throw err
+                        }
+                    echo "Test Ends"
+                }
+            }
+        }
+
+	    stage ('Deploy/Deliver') {
+            steps {
+                script{
+                    echo 'Deploy/Deliver Begins'
+                    echo 'DeploymentDeploy/Deliver Ends'
+                }
+            }
+        }
+    }
+
+        post {
+                always {
+                    echo 'JENKINS PIPELINE'
+                }
+                success {
+                    echo 'JENKINS PIPELINE SUCCESSFUL'
+                    archive "target/**/*"
+                    junit 'target/surefire-reports/**/*.xml'
+                }
+                aborted {
+                    echo 'JENKINS PIPELINE ABORTED'
+                }
+                
+                failure {
+                    echo 'JENKINS PIPELINE FAILED'
+                    archive "target/**/*"
+                    junit 'target/surefire-reports/**/*.xml'
+                    emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                    subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                }
+                
+        }
+}
