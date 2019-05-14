@@ -10,8 +10,8 @@ pipeline {
             steps {
                 script {
                         echo "Code Checkout Begins"
-                        mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
-                            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6df16e81-b5bf-452b-863d-c192110dbc06', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])                            
+                        mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
+                            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '327fa637-c43a-489a-b8b2-09a376261557', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])
                             if (isUnix()) {
                              	sh "'${mvnHome}/bin/mvn' clean package -DskipTests docker:build"
                           	} else {
@@ -26,7 +26,7 @@ pipeline {
             steps{
                 script{
                     echo "Build Begins"
-                    mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+                    mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
                     if (isUnix()) {
                         echo 'Build process in Unix'
                         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
@@ -43,7 +43,7 @@ pipeline {
             steps{
                 script{
                     echo "SonarQube Analysis Begins"
-                                mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+                                mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
                                 withSonarQubeEnv('SonarQube') {
                                     if (isUnix()) {
                                         echo 'SonarQube Analysis in Unix'
@@ -80,7 +80,7 @@ pipeline {
                 echo 'Test Begins'
                 try {
                     // Any maven phase that that triggers the test phase can be used here.
-                    mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+                    mvnHome =  tool name: 'apache-maven-3.6.1', type: 'maven'
                         if (isUnix()) {
                             echo "Test Process in Unix"
                             sh "${mvnHome}/bin/mvn test -B"
