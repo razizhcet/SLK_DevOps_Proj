@@ -128,7 +128,7 @@ pipeline {
                     } catch(err) {
                         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                           	if (currentBuild.result == 'FAILURE')
-                                echo "ERROR:  ${error}"
+                                echo "ERROR:  ${err}"
                                 echo "RESULT: ${currentBuild.result}"
                             
                             // Email Notfication triggers
@@ -162,7 +162,7 @@ pipeline {
             junit 'target/surefire-reports/**/*.xml'
             
              // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
