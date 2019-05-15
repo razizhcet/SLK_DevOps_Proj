@@ -18,10 +18,10 @@ pipeline {
                                 } else {
                                     bat label: 'Build', script: "\"${mvnHome}\"\\bin\\mvn -Dmaven.test.failure.ignore clean package" 
                                 }
-                        }catch(Exception error){
+                        }catch(err){
                             if (currentBuild.result == 'FAILURE')
                             // Email Notfication triggers
-                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                         }
@@ -43,10 +43,10 @@ pipeline {
                                 echo 'Build process Windows'
                                 bat label: 'Build', script: "\"${mvnHome}\"\\bin\\mvn -Dmaven.test.failure.ignore clean package"
                             }
-                        }catch(Exception error){
+                        }catch(err){
                             if (currentBuild.result == 'FAILURE')
                                      // Email Notfication triggers
-                                    emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+                                    emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
                                     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"  
                         }
@@ -71,10 +71,10 @@ pipeline {
                                                bat label: 'SonarQube Analysis', script: "\"${mvnHome}\"\\bin\\mvn sonar:sonar"
                                             }
                                         }
-                                }catch(Exception error){
+                                }catch(errr){
                                     if (currentBuild.result == 'FAILURE')
                                      // Email Notfication triggers
-                                    emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+                                    emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
                                     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                                 }
@@ -98,10 +98,10 @@ pipeline {
                                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"    
                                         }
                                 }
-                        }catch(Exception error){
+                        }catch(errr){
                             if (currentBuild.result == 'FAILURE')
                                 // Email Notfication triggers
-                                emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+                                emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
                                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                         }
@@ -125,14 +125,14 @@ pipeline {
                             echo 'Test Process in Windows'
                             bat label: 'Junit Testing process', script: "\"${mvnHome}\"\\bin\\mvn test -B"
                         }
-                    } catch(Exception error) {
+                    } catch(err) {
                         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                           	if (currentBuild.result == 'FAILURE')
                                 echo "ERROR:  ${error}"
                                 echo "RESULT: ${currentBuild.result}"
                             
                             // Email Notfication triggers
-                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${error}\n More info at: ${env.BUILD_URL}",
+                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${err}\n More info at: ${env.BUILD_URL}",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                           	throw exception
@@ -169,7 +169,7 @@ pipeline {
         aborted {
             echo 'JENKINS PIPELINE ABORTED'
              // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
@@ -180,7 +180,7 @@ pipeline {
             junit 'target/surefire-reports/**/*.xml'
             
              // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${error}\n More info at: ${env.BUILD_URL}",
+            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
