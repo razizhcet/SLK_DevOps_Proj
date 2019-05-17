@@ -60,7 +60,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@SuppressWarnings(&quot;unchecked&quot;)
 	@Override
 	public List&lt;Employee&gt; getAllEmployees(String employeeName) {
-<span class="fc" id="L63">		String query = &quot;SELECT e.* FROM Employees e WHERE e.name like '%&quot; + employeeName + &quot;%'&quot;;</span>
+<span class="fc" id="L63">		String query = &quot;SELECT e.* FROM Employee e WHERE e.name like '%&quot; + employeeName.trim() + &quot;%'&quot;;</span>
 <span class="fc" id="L64">		List&lt;Object[]&gt; employeeObjects = hibernateUtil.fetchAll(query);</span>
 <span class="fc" id="L65">		List&lt;Employee&gt; employees = new ArrayList&lt;Employee&gt;();</span>
 <span class="fc bfc" id="L66" title="All 2 branches covered.">		for (Object[] employeeObject : employeeObjects) {</span>
