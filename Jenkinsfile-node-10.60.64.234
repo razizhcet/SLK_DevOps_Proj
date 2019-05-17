@@ -117,7 +117,7 @@ node {
     
     stage ('Deploy/Deliver') {
         echo 'Deploy/Deliver Begins'
-        bat label: '', script: 'copy D:\\Tools\\Jenkins\\JenkinsHome\\workspace\\DevOps_node_1\\target\\*.war D:\\apache-tomcat-8.0\\webapps'
+        bat label: '', script: 'copy D:\\Tools\\Jenkins\\JenkinsHome\\workspace\\DevOps_node_2\\target\\*.war D:\\apache-tomcat-8.0\\webapps'
         echo 'DeploymentDeploy/Deliver Ends'
     }
    
