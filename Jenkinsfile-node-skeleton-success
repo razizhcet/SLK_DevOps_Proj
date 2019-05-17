@@ -1,0 +1,30 @@
+node {  
+    stage('Code') { 
+        echo "Code Checkout Begins"
+        def mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+        echo "Code Checkout Ends"
+    }
+    stage('Build') { 
+        echo "Build Begins"
+        def mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+        echo "Build Ends"
+    }
+    stage('SonarQube Analysis') { 
+        echo "SonarQube Analysis Begins"
+        def mvnHome =  tool name: 'apache-maven-3.6.0', type: 'maven'
+        echo "SonarQube Analysis Ends"
+    }
+    
+    stage('SonarQube Quality Gate Status Check'){
+        echo "SonarQube Quality Gate Status Check Begins"
+        echo "SonarQube Quality Gate Status Check Ends"
+    }
+    stage ('Test') {
+            echo 'Test Begins'
+            echo "Test Ends"
+    }
+    stage ('Deploy/Deliver') {
+        echo 'Deploy/Deliver Begins'
+        echo 'DeploymentDeploy/Deliver Ends'
+    }
+}
