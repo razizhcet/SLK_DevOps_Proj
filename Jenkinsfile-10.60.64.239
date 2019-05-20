@@ -13,7 +13,7 @@ pipeline {
                 script {
                         echo "Code Checkout Begins"
                         mvnHome =  tool name: 'apache-maven-3.3.9', type: 'maven'
-                            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6df16e81-b5bf-452b-863d-c192110dbc06', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])                            
+                        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '38e616a1-a166-4402-a8d1-4d76c3f354da', url: 'http://srv03wapsdlc2:8080/tfs/DefaultCollection/TESTGIT/_git/TESTGIT']]])
                             if (isUnix()) {
                              	sh "'${mvnHome}/bin/mvn' clean package -DskipTests docker:build"
                           	} else {
