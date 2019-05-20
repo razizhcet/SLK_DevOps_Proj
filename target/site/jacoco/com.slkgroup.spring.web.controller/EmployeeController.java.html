@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring4Hiberante4Integration</a> &gt; <a href="index.source.html" class="el_package">com.slkgroup.spring.web.controller</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.slkgroup.spring.web.controller;
+
+import java.util.List;
+
+import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.slkgroup.spring.web.entity.Employee;
+import com.slkgroup.spring.web.service.EmployeeService;
+/**
+ * @author Balasubramanyam B
+ * @version 1.0
+ */
+@Controller
+public class EmployeeController {
+
+<span class="fc" id="L22">	private static final Logger logger = Logger.getLogger(EmployeeController.class);</span>
+
+<span class="fc" id="L24">	public EmployeeController() {</span>
+<span class="fc" id="L25">		System.out.println(&quot;EmployeeController()&quot;);</span>
+<span class="fc" id="L26">	}</span>
+
+	@Autowired
+	private EmployeeService employeeService;
+
+	@RequestMapping(value = { &quot;/&quot;, &quot;/home&quot; })
+	public ModelAndView homePage() {
+<span class="fc" id="L33">		logger.info(&quot;homePage: &quot;);</span>
+<span class="fc" id="L34">		return new ModelAndView(&quot;home&quot;);</span>
+	}
+
+	@RequestMapping(&quot;createEmployee&quot;)
+	public ModelAndView createEmployee(@ModelAttribute Employee employee) {
+<span class="fc" id="L39">		logger.info(&quot;Creating Employee. Data: &quot; + employee);</span>
+<span class="fc" id="L40">		return new ModelAndView(&quot;employeeForm&quot;);</span>
+	}
+
+	@RequestMapping(&quot;editEmployee&quot;)
+	public ModelAndView editEmployee(@RequestParam long id, @ModelAttribute Employee employee) {
+<span class="fc" id="L45">		logger.info(&quot;Updating the Employee for the Id &quot; + id);</span>
+<span class="fc" id="L46">		employee = employeeService.getEmployee(id);</span>
+<span class="fc" id="L47">		return new ModelAndView(&quot;employeeForm&quot;, &quot;employeeObject&quot;, employee);</span>
+	}
+
+	@RequestMapping(&quot;saveEmployee&quot;)
+	public ModelAndView saveEmployee(@ModelAttribute Employee employee) {
+<span class="fc" id="L52">		logger.info(&quot;Saving the Employee. Data : &quot; + employee);</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (employee.getId() == 0) { // if employee id is 0 then creating the employee other updating the employee</span>
+<span class="nc" id="L54">			employeeService.createEmployee(employee);</span>
+		} else {
+<span class="fc" id="L56">			employeeService.updateEmployee(employee);</span>
+		}
+<span class="fc" id="L58">		return new ModelAndView(&quot;redirect:getAllEmployees&quot;);</span>
+	}
+
+	@RequestMapping(&quot;deleteEmployee&quot;)
+	public ModelAndView deleteEmployee(@RequestParam long id) {
+<span class="fc" id="L63">		logger.info(&quot;Deleting the Employee. Id : &quot; + id);</span>
+<span class="fc" id="L64">		employeeService.deleteEmployee(id);</span>
+<span class="fc" id="L65">		return new ModelAndView(&quot;redirect:getAllEmployees&quot;);</span>
+	}
+
+	@RequestMapping(value = { &quot;getAllEmployees&quot; })
+	public ModelAndView getAllEmployees() {
+<span class="fc" id="L70">		logger.info(&quot;Getting the all Employees.&quot;);</span>
+<span class="fc" id="L71">		List&lt;Employee&gt; employeeList = employeeService.getAllEmployees();</span>
+<span class="fc" id="L72">		return new ModelAndView(&quot;employeeList&quot;, &quot;employeeList&quot;, employeeList);</span>
+	}
+
+	@RequestMapping(&quot;searchEmployee&quot;)
+	public ModelAndView searchEmployee(@RequestParam(&quot;searchName&quot;) String searchName) {
+<span class="fc" id="L77">		logger.info(&quot;Searching the Employee. Employee Names: &quot; + searchName);</span>
+<span class="fc" id="L78">		List&lt;Employee&gt; employeeList = employeeService.getAllEmployees(searchName);</span>
+<span class="fc" id="L79">		return new ModelAndView(&quot;employeeList&quot;, &quot;employeeList&quot;, employeeList);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
