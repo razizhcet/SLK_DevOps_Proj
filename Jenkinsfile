@@ -146,6 +146,7 @@ pipeline {
             steps {
                 script{
                     echo 'Deploy/Deliver Begins'
+                    bat label: '', script: 'build \'Tomcat_Deploy\''
                     echo 'DeploymentDeploy/Deliver Ends'
                 }
             }
