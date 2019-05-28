@@ -23,10 +23,7 @@ import java.util.List;
 @Transactional
 public class EmployeeDAOImpl implements EmployeeDAO {
 
-	public EmployeeDAOImpl() {
-		System.out.println("EmployeeDAOImpl");
-	}
-
+	
 	@Autowired
 	private HibernateUtil hibernateUtil;
 
