@@ -18,7 +18,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <style type="text/css">
 .myrow-container {
-	margin: 25px;
+	margin: 20px;
 }
 </style>
 </head>
