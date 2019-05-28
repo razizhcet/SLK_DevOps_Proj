@@ -1,5 +1,4 @@
 pipeline {
-    withEnv(["JAVA_HOME=${ tool 'jdk1.8.0_181' }"]){ 
     agent {
         label 'master'
     }
@@ -149,7 +148,7 @@ pipeline {
             }
         }
    }
-   }
+   
         
     post {
         always {
