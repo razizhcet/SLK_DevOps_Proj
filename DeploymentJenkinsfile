@@ -1,8 +1,5 @@
 pipeline {
-    node (build) {
-        env.JAVA_HOME="${tool 'jdk-1.8'}"
-    env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-    sh 'java -version' 
+    withEnv(["JAVA_HOME=${ tool 'jdk-1.8.0_64bits' }"]){ 
     agent {
         label 'master'
     }
