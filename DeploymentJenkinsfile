@@ -100,14 +100,14 @@ pipeline {
                                             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"    
+                                        }else{
+                                            currentBuild.result = "SUCCESS"
                                         }
+                                    
                                 }
                         }catch(err){
                             if (currentBuild.result == 'FAILURE')
-                                // Email Notfication triggers
-                                emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
-                                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                            println("catch exeption. currentBuild.result: ${currentBuild.result}")
                         }
                     echo "SonarQube Quality Gate Status Check Ends"
                 }
