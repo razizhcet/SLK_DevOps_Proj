@@ -30,26 +30,22 @@ public class EmployeeController {
 
 	@RequestMapping(value = { "/", "/home" })
 	public ModelAndView homePage() {
-		logger.info("homePage: ");
 		return new ModelAndView("home");
 	}
 
 	@RequestMapping("createEmployee")
 	public ModelAndView createEmployee(@ModelAttribute Employee employee) {
-		logger.info("Creating Employee. Data: " + employee);
 		return new ModelAndView("employeeForm");
 	}
 
 	@RequestMapping("editEmployee")
 	public ModelAndView editEmployee(@RequestParam long id, @ModelAttribute Employee employee) {
-		logger.info("Updating the Employee for the Id " + id);
 		employee = employeeService.getEmployee(id);
 		return new ModelAndView("employeeForm", "employeeObject", employee);
 	}
 
 	@RequestMapping("saveEmployee")
 	public ModelAndView saveEmployee(@ModelAttribute Employee employee) {
-		logger.info("Saving the Employee. Data : " + employee);
 		if (employee.getId() == 0) { // if employee id is 0 then creating the employee other updating the employee
 			employeeService.createEmployee(employee);
 		} else {
@@ -60,21 +56,18 @@ public class EmployeeController {
 
 	@RequestMapping("deleteEmployee")
 	public ModelAndView deleteEmployee(@RequestParam long id) {
-		logger.info("Deleting the Employee. Id : " + id);
 		employeeService.deleteEmployee(id);
 		return new ModelAndView("redirect:getAllEmployees");
 	}
 
 	@RequestMapping(value = { "getAllEmployees" })
 	public ModelAndView getAllEmployees() {
-		logger.info("Getting the all Employees.");
 		List<Employee> employeeList = employeeService.getAllEmployees();
 		return new ModelAndView("employeeList", "employeeList", employeeList);
 	}
 
 	@RequestMapping("searchEmployee")
 	public ModelAndView searchEmployee(@RequestParam("searchName") String searchName) {
-		logger.info("Searching the Employee. Employee Names: " + searchName);
 		List<Employee> employeeList = employeeService.getAllEmployees(searchName);
 		return new ModelAndView("employeeList", "employeeList", employeeList);
 	}
