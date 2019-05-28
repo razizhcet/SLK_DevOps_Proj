@@ -91,7 +91,7 @@ pipeline {
             steps{
                 script{
                     echo "SonarQube Quality Gate Status Check Begins"
-                        try {
+                      
                                 timeout(time: 1, unit: 'HOURS') {
                                     def qg = waitForQualityGate()
                                         if (qg.status != 'OK') {
@@ -101,16 +101,10 @@ pipeline {
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"    
                                         }
+                                           
                                 }
-                        }catch(errr){
-                            if (currentBuild.result == 'FAILURE')
-                                // Email Notfication triggers
-                                emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
-                                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                        }
                     echo "SonarQube Quality Gate Status Check Ends"
-                }
+
             }
         }
         
