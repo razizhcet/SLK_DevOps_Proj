@@ -106,7 +106,7 @@ pipeline {
                                     
                                 
                         }catch(err){
-                            if (currentBuild.result == 'FAILURE')
+                            if (currentBuild.result == 'ERROR')
                             println("catch exeption. currentBuild.result: ${currentBuild.result}")
                         }
                     echo "SonarQube Quality Gate Status Check Ends"
