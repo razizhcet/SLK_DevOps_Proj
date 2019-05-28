@@ -2,6 +2,10 @@ pipeline {
     agent {
         label 'master'
     }
+     tools { 
+        maven 'apache-maven-3.6.1' 
+        jdk 'jdk1.8.0_181' 
+    }
     options { 
       skipDefaultCheckout() 
     }
@@ -148,6 +152,17 @@ pipeline {
             }
         }
    }
+
+
+    stage ('Deploy/Deliver') {
+            steps {
+                script{
+                    echo 'Deploy/Deliver Begins'
+                    bat label: '', script: 'build \'Tomcat_Deploy\''
+                    echo 'DeploymentDeploy/Deliver Ends'
+                }
+            }
+        }
    
         
     post {
