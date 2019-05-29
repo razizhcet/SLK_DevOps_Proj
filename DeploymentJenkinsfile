@@ -2,7 +2,7 @@ pipeline {
     agent {
         label 'master'
     }
-     tools { 
+tools { 
         maven 'apache-maven-3.6.1' 
         jdk 'jdk1.8.0_181' 
     }
@@ -75,7 +75,7 @@ pipeline {
                                                bat label: 'SonarQube Analysis', script: "\"${mvnHome}\"\\bin\\mvn sonar:sonar"
                                             }
                                         }
-                                }catch(err){
+                                }catch(errr){
                                     if (currentBuild.result == 'FAILURE')
                                      // Email Notfication triggers
                                     emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
@@ -91,8 +91,8 @@ pipeline {
             steps{
                 script{
                     echo "SonarQube Quality Gate Status Check Begins"
-                        
-                                
+                        try {
+                                timeout(time: 1, unit: 'HOURS') {
                                     def qg = waitForQualityGate()
                                         if (qg.status != 'OK') {
                                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
@@ -100,12 +100,17 @@ pipeline {
                                             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"    
-                                        }else{
-                                            currentBuild.result = "SUCCESS"
                                         }
-                                
+                                }
+                        }catch(errr){
+                            if (currentBuild.result == 'FAILURE')
+                                // Email Notfication triggers
+                                emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+                                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                        }
                     echo "SonarQube Quality Gate Status Check Ends"
-                
+                }
             }
         }
         
@@ -147,7 +152,6 @@ pipeline {
             }
         }
    }
-
         
     post {
         always {
@@ -172,7 +176,10 @@ pipeline {
         }
       
         failure {
-                       
+            echo 'JENKINS PIPELINE FAILED'
+            archive "target/**/*"
+            junit 'target/surefire-reports/**/*.xml'
+            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
@@ -181,5 +188,4 @@ pipeline {
     }
         
    
-}
 }
