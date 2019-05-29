@@ -91,7 +91,7 @@ pipeline {
             steps{
                 script{
                     echo "SonarQube Quality Gate Status Check Begins"
-                        try {
+                        
                                 
                                     def qg = waitForQualityGate()
                                         if (qg.status != 'OK') {
@@ -103,12 +103,7 @@ pipeline {
                                         }else{
                                             currentBuild.result = "SUCCESS"
                                         }
-                                    
                                 
-                        }catch(err){
-                            if (currentBuild.result == 'ERROR')
-                            println("catch exeption. currentBuild.result: ${currentBuild.result}")
-                        }
                     echo "SonarQube Quality Gate Status Check Ends"
                 }
             }
