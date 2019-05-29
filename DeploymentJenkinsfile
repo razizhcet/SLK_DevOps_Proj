@@ -95,11 +95,11 @@ tools {
                                 timeout(time: 1, unit: 'HOURS') {
                                     def qg = waitForQualityGate()
                                         if (qg.status != 'OK')
-                                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
                                             // Email Notfication triggers
                                             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                                            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"            
+                                            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                                            error "Pipeline aborted due to quality gate failure: ${qg.status}"            
                                 }
                         
                     echo "SonarQube Quality Gate Status Check Ends"
@@ -169,6 +169,9 @@ tools {
         }
       
         failure {
+            echo 'JENKINS PIPELINE FAILED'
+            archive "target/**/*"
+            junit 'target/surefire-reports/**/*.xml'
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
