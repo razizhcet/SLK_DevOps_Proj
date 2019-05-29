@@ -169,10 +169,6 @@ tools {
         }
       
         failure {
-            echo 'JENKINS PIPELINE FAILED'
-            archive "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
