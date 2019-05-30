@@ -150,6 +150,13 @@ tools {
         always {
             echo 'JENKINS PIPELINE'
         }
+        failure {
+            echo 'JENKINS PIPELINE FAILURE'            
+             // Email Notfication triggers
+            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: "Jenkins Build FAILED: Job ${env.JOB_NAME}"
+        }
         success {
             echo 'JENKINS PIPELINE SUCCESSFUL'           
              // Email Notfication triggers
@@ -165,12 +172,5 @@ tools {
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
       
-        failure {
-            echo 'JENKINS PIPELINE FAILURE'            
-             // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
-            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            subject: "Jenkins Build FAILED: Job ${env.JOB_NAME}"
-        }
     }         
 }
