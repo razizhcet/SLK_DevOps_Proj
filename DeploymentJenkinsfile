@@ -152,7 +152,7 @@ tools {
             echo 'JENKINS PIPELINE'
         }
         failure {
-            steps{
+            script{
             currentBuild.result = 'FAILURE'
             echo 'JENKINS PIPELINE FAILURE'            
              // Email Notfication triggers
@@ -162,7 +162,7 @@ tools {
             }
         }
         success {
-            steps{
+            script{
             currentBuild.result = 'SUCCESSFUL'
             echo 'JENKINS PIPELINE SUCCESSFUL'           
              // Email Notfication triggers
@@ -172,7 +172,7 @@ tools {
             }
         }
         aborted {
-            steps{
+            script{
             currentBuild.result = 'ABORTED'
             echo 'JENKINS PIPELINE ABORTED'
              // Email Notfication triggers
