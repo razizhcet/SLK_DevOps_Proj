@@ -152,28 +152,34 @@ tools {
             echo 'JENKINS PIPELINE'
         }
         failure {
+            steps{
             currentBuild.result = 'FAILURE'
             echo 'JENKINS PIPELINE FAILURE'            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+            }
         }
         success {
+            steps{
             currentBuild.result = 'SUCCESSFUL'
             echo 'JENKINS PIPELINE SUCCESSFUL'           
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+            }
         }
         aborted {
+            steps{
             currentBuild.result = 'ABORTED'
             echo 'JENKINS PIPELINE ABORTED'
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+            }
         }
       
     }         
