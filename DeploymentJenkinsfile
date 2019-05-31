@@ -166,7 +166,9 @@ tools {
         success {
             script{
             currentBuild.result = 'SUCCESSFUL'
-            echo 'JENKINS PIPELINE SUCCESSFUL'           
+            echo 'JENKINS PIPELINE SUCCESSFUL'
+            echo 'JENKINS PIPELINE FAILURE'
+             archive "target/**/*"           
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
@@ -176,10 +178,7 @@ tools {
         aborted {
             script{
             currentBuild.result = 'ABORTED'
-            echo 'JENKINS PIPELINE ABORTED'
-             archive "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            
+            echo 'JENKINS PIPELINE ABORTED'            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
