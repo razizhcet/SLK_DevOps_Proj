@@ -99,7 +99,8 @@ tools {
                                             // Email Notfication triggers
                                             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                                            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"    
+                                            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+                                            error "Pipeline aborted due to quality gate failure: ${qg.status}"   
                                         }
                                 }
                         }catch(errr){
