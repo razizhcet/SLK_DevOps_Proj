@@ -91,19 +91,24 @@ tools {
             steps{
                 script{
                     echo "SonarQube Quality Gate Status Check Begins"
-                        
+                        try {
                                 timeout(time: 1, unit: 'HOURS') {
                                     def qg = waitForQualityGate()
                                         if (qg.status != 'OK') {
-                                            currentBuild.result = 'FAILURE'
+                                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
                                             // Email Notfication triggers
                                             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                                            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
-                                            error "Pipeline aborted due to quality gate failure: ${qg.status}"    
+                                            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"    
                                         }
                                 }
-                        
+                        }catch(errr){
+                            currentBuild.result == 'FAILURE'
+                                // Email Notfication triggers
+                                emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+                                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                                subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+                        }
                     echo "SonarQube Quality Gate Status Check Ends"
                 }
             }
