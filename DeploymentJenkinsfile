@@ -189,16 +189,6 @@ tools {
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
             }
         }
-        failure {
-            script{
-            currentBuild.result = 'FAILURE'
-            echo 'JENKINS PIPELINE FAILURE'        
-             // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
-            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
-            }
-        }
         aborted {
             script{
             currentBuild.result = 'ABORTED'
@@ -209,6 +199,16 @@ tools {
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
             }
         }
-      
+        failure {
+            script{
+            currentBuild.result = 'FAILURE'
+            echo 'JENKINS PIPELINE FAILURE'        
+             // Email Notfication triggers
+            emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+            }
+        }
+        
     }         
 }
