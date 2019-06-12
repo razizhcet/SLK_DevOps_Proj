@@ -194,7 +194,7 @@ tools {
             currentBuild.result = 'FAILURE'
             echo 'JENKINS PIPELINE FAILURE'        
              // Email Notfication triggers
-            emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+            emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
             }
