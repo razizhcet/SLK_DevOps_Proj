@@ -109,7 +109,6 @@ tools {
                                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                                 subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
                         }
-                    echo "SonarQube Quality Gate Status Check Ends"
                 }
             }
         }
@@ -150,21 +149,21 @@ tools {
             steps {
                 script{
                 echo 'UI Test Begins'
-                try{
-                    steps{
-                        build 'SeleniumJob'
-                    }
-                } catch(err) {
-                          	currentBuild.result = 'FAILURE'
-                                echo "ERROR:  ${err}"
-                                echo "RESULT: ${currentBuild.result}"
+                //try{
+                    //steps{
+                       // build 'SeleniumJob'
+                    //}
+                //} catch(err) {
+                          	//currentBuild.result = 'FAILURE'
+                                //echo "ERROR:  ${err}"
+                               // echo "RESULT: ${currentBuild.result}"
                             
                             // Email Notfication triggers
-                            emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${err}\n More info at: ${env.BUILD_URL}",
-                            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                            subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
-                          	throw exception
-                    }
+                           // emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${err}\n More info at: ${env.BUILD_URL}",
+                            //recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                           // subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+                          //	throw exception
+                    //}
                 echo "UI Test Ends"
                 }
             }
