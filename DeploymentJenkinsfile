@@ -175,7 +175,7 @@ tools {
             }
         }
    }
-       post {
+   post {
         always {
             echo 'JENKINS PIPELINE'
         }
