@@ -162,10 +162,7 @@ pipeline {
             script{
                 currentBuild.result = 'SUCCESSFUL'
             }
-            echo 'JENKINS PIPELINE SUCCESSFUL'
-            archiveArtifacts artifacts: "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            
+            echo 'JENKINS PIPELINE SUCCESSFUL'            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
@@ -184,12 +181,9 @@ pipeline {
       
         failure {
             script{
-                currentBuild.result = 'FAILED'
+                currentBuild.result = 'FAILURE'
             }
-            echo 'JENKINS PIPELINE FAILED'
-            archiveArtifacts artifacts: "target/**/*"
-            junit 'target/surefire-reports/**/*.xml'
-            
+            echo 'JENKINS PIPELINE FAILED'            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
