@@ -161,12 +161,13 @@ pipeline {
         success {
             script{
                 currentBuild.result = 'SUCCESSFUL'
-            }
             echo 'JENKINS PIPELINE SUCCESSFUL'            
              // Email Notfication triggers
             emailext body: " Results: ${currentBuild.result} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.result}: Job ${env.JOB_NAME}"
+            return 
+            }
         }
         aborted {
             script{
