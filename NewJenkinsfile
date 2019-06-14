@@ -163,7 +163,7 @@ pipeline {
                 currentBuild.result = 'SUCCESSFUL'
             }
             echo 'JENKINS PIPELINE SUCCESSFUL'
-            archive "target/**/*"
+            archiveArtifacts artifacts: "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
             
              // Email Notfication triggers
@@ -187,7 +187,7 @@ pipeline {
                 currentBuild.result = 'FAILED'
             }
             echo 'JENKINS PIPELINE FAILED'
-            archive "target/**/*"
+            archiveArtifacts artifacts: "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
             
              // Email Notfication triggers
