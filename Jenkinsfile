@@ -186,6 +186,30 @@ pipeline {
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
     }
-        
+        stages('workitems')
+        {
+        powershell label: '', script: '''# using env vars passed from VSTS build
+        $collectionuri = $Env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
+        $token = $Env:SYSTEM_ACCESSTOKEN # need to configure build to allow passing OAuth tokens
+
+        $basicAuth = "{0}:{1}"-f "ivan-the-terrible", $token
+        $basicAuth = [System.Text.Encoding]::UTF8.GetBytes($basicAuth)
+        $basicAuth = [System.Convert]::ToBase64String($basicAuth)
+        $headers = @{Authorization=("Basic {0}"-f $basicAuth)}
+
+        $WorkItemType = \'User Story\'
+
+        $url = $collectionuri + \'DefaultCollection/_apis/wit/wiql?api-version=1.0\'
+
+        $WIQL_query = "Select [System.Id], [System.Title], [System.State] From WorkItems Where [System.WorkItemType] = \'" + $WorkItemType + "\' AND [State] = \'Closed\' order by [Microsoft.VSTS.Common.Priority] asc, [System.CreatedDate] desc"
+        $body = @{ query = $WIQL_query }
+        $bodyJson=@($body) | ConvertTo-Json
+
+        $response = Invoke-RestMethod -Uri $url -headers $headers -Method Post -ContentType "application/json" -Body $bodyJson
+
+        $workitems = $response.workItems
+
+        Write-Host "Found" $workitems.Count "work items of type:" $WorkItemType'''
+        }
    
 }
