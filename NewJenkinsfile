@@ -9,6 +9,9 @@ pipeline {
     options { 
       skipDefaultCheckout() 
     }
+    environment {
+        tag = VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED,"yyyyMMdd"}-develop-${BUILDS_TODAY}');
+        }
     stages {
         stage('Code'){
             steps {
@@ -147,14 +150,10 @@ pipeline {
         }
         stage ('Deploy/Deliver')
         {
-            timeout(time: 60, unit: 'SECONDS')
-            {
-                input {
-                    message 'Do you want to proceed to the Deployment?'
+            
+            input{
+              message "Do you want to proceed for deployment?"
                 }
-            //input{
-              //message "Do you want to proceed for deployment?"
-                //}
             steps {
                 build 'DeploymentJob'
             }
