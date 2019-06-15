@@ -146,10 +146,15 @@ pipeline {
             }
         }
         
-        stage ('Deploy/Deliver') {
-            input{
-                message "Do you want to proceed for production deployment?"
+        stage ('Deploy/Deliver')
+        {
+            timeout(time:5, unit:'DAYS')
+            {
+                input message:'Approve deployment?', submitter: 'it-ops'
                 }
+            //input{
+              //  message "Do you want to proceed for production deployment?"
+                //}
             steps {
                 build 'DeploymentJob'
             }
