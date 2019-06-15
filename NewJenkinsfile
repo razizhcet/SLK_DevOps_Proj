@@ -175,7 +175,7 @@ pipeline {
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
       
-        failure {
+        failure | error {
             echo 'JENKINS PIPELINE FAILED'
             archiveArtifacts artifacts: "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
