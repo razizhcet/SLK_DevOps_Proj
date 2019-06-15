@@ -175,7 +175,7 @@ pipeline {
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         }
       
-        failure | error {
+        failure {
             echo 'JENKINS PIPELINE FAILED'
             archiveArtifacts artifacts: "target/**/*"
             junit 'target/surefire-reports/**/*.xml'
@@ -184,6 +184,13 @@ pipeline {
             emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+        }
+        unsuccessful{
+            echo 'JENKINS PIPELINE UNSUCCESSFUL'
+            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Exception: ${err}\n More info at: ${env.BUILD_URL}",
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+
         }
     }
         
