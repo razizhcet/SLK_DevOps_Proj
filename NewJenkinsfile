@@ -148,6 +148,28 @@ pipeline {
                 }
             }
         }
+        stage ('Selenium Test') {
+            steps {
+                script{
+                echo 'Test Begins'
+                try {
+                    build 'SeleniumTestJob'
+                    }
+                     catch(err) {
+                          	if (currentBuild.result == 'FAILURE')
+                                echo "ERROR:  ${err}"
+                                echo "RESULT: ${currentBuild.result}"
+                            
+                            // Email Notfication triggers
+                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${err}\n More info at: ${env.BUILD_URL}",
+                            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                          	throw exception
+                    }
+                echo "Test Ends"
+                }
+            }
+        }
         stage ('Deploy/Deliver')
         {
             
