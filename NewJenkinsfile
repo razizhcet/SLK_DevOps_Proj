@@ -148,7 +148,7 @@ pipeline {
         
         stage ('Deploy/Deliver') {
             steps {
-                build 'DeploymentJob'
+                build 'DeploymmentJob'
             }
         }
    }
