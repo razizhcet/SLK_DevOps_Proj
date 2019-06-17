@@ -1,0 +1,7 @@
+import groovy.json.JsonSlurper
+
+def getJobStatus(String jobName){
+    def request = httpRequest "https://<JENKINS_ADDRESS>/job/${jobName}/lastBuild/api/json"
+    def requestJson = new JsonSlurper().parseText(request.getContent())
+    return requestJson['result']
+}
