@@ -10,7 +10,8 @@ pipeline {
       skipDefaultCheckout() 
     }
     environment {
-        tag = VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED,"yyyyMMdd"}-develop-${BUILDS_TODAY}');
+        VersionNumber projectStartDate: '2019-03-12', versionNumberString: 'BUILDS_ALL_TIME', versionPrefix: 'v', worstResultForIncrement: 'NOT_BUILT'
+        //tag = VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED,"yyyyMMdd"}-develop-${BUILDS_TODAY}');
         }
     stages {
         stage('Code'){
