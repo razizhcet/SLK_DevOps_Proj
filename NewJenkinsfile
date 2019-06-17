@@ -151,7 +151,7 @@ pipeline {
         stage ('Selenium Test') {
             steps {
                 script{
-                echo 'Test Begins'
+                echo 'Selenium Test Begins'
                 try {
                     build 'SeleniumTestJob'
                     }
@@ -160,13 +160,13 @@ pipeline {
                                 echo "ERROR:  ${err}"
                                 echo "RESULT: ${currentBuild.result}"
                             
-                            // Email Notfication triggers
-                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} Error: ${err}\n More info at: ${env.BUILD_URL}",
+                             Email Notfication triggers
+                            emailext body: " Results: ${currentBuild.currentResult} Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                          	throw exception
+                          	
                     }
-                echo "Test Ends"
+                echo "Selenium Test Ends"
                 }
             }
         }
