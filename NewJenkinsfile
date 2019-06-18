@@ -9,11 +9,6 @@ pipeline {
     options { 
       skipDefaultCheckout() 
     }
-    environment {
-         VERSION = VersionNumber([projectStartDate: '2019-03-12', skipFailedBuilds: true, versionNumberString: '${YEARS_SINCE_PROJECT_START, XX}.${BUILD_MONTH, XX}.${BUILDS_THIS_MONTH}', versionPrefix: 'v']);
-        //VersionNumber projectStartDate: '2019-03-12', versionNumberString: 'BUILDS_ALL_TIME', versionPrefix: 'v', worstResultForIncrement: 'NOT_BUILT'
-        //tag = VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED,"yyyyMMdd"}-develop-${BUILDS_TODAY}');
-        }
     stages {
         stage('Code'){
             steps {
@@ -175,9 +170,9 @@ pipeline {
         stage ('Deploy/Deliver')
         {
             
-            input{
-              message "Do you want to proceed for deliver/deployment?"
-                }
+            //input{
+              //message "Do you want to proceed for deliver/deployment?"
+               // }
             steps {
                 build 'DeploymentJob'
             }
