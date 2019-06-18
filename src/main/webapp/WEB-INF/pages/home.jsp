@@ -28,7 +28,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<div align="left">
-					<a href="getAllEmployees">Search Employees</a>
+					<a href="getAllEmployees">Find Employees</a>
 					</div>
 					<div align="center">
 						<a href="home">Home</a>
